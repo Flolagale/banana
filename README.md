@@ -8,19 +8,29 @@ The Banana project provides a crawler (the Bananabot), an indexer, some scorers,
 *It is now in a pretty rough pre-alpha state.*
 
 ###Why? Aren't the existing web search engines good enough?
-Of course they are, but the aim of Banana is to avoid any logging, tracking or bubbling that the commercial web search engines can use. The other reason is because we have a lot of fun developing Banana.
+Of course they are, but the aim of Banana is to avoid any logging, tracking or bubbling that the commercial
+web search engines can use. The other reason is because we have a lot of fun developing Banana.
 
 ###In what Banana is different from the existing open source search engines?
-Banana is different because it comes as an installable standalone package. Some very good open source projects exist (for instance [Lucene]), allowing you to _develop_ your own search engine, based on their technology. The Banana project is meant to allow you to _easily install_ you engine, and it should work _out of the box_.
+Banana is different because it comes as an installable standalone package. Some very good open source
+projects exist (for instance [Lucene]), allowing you to _develop_ your own search engine,
+based on their technology. The Banana project is meant to allow you to _easily install_ you engine,
+and it should work _out of the box_.
 
 ###Can I try it?
 As soon as it will be sufficiently robust, a living instance of Banana search will be available.
 
 ###Why the GNU Affero General Public License?
-The GNU [AGPLv3] licence is fully compatible with the GNU [GPLv3] license, adding a clause to fill a hole in the GPL for the software as a service utilisation. Indeed, the GPL does not ensures the copyleft if someone runs a modified GPL software on a server, without redistributing it. The AGPL makes mandatory to provide a link for downloading the source code from the web service page. See the dedicated page at the [Free Software Foundation] or on [Wikipedia] for additional information.
+The GNU [AGPLv3] licence is fully compatible with the GNU [GPLv3] license,
+adding a clause to fill a hole in the GPL for the software as a service utilisation.
+Indeed, the GPL does not ensures the copyleft if someone runs a modified GPL software on a server,
+without redistributing it.
+See the dedicated page at the [Free Software Foundation] or on [Wikipedia]
+for additional information.
 
 ###Dependencies
-Banana uses [Python 2.7], [Bottle 0.10.9] as lightweight web framework for the web interface and we plan to use [MongoDB] with the [PyMongo] driver for the index.
+Banana uses [Python 2.7], [Bottle 0.10.9] as lightweight web framework for the web interface and
+we plan to use [MongoDB] with the [PyMongo] driver for the index.
 
 ###Installation
 Soon...
