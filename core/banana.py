@@ -57,7 +57,7 @@ class Banana(object):
             Crawl the web starting from the seed url and using a potentially already
             dumped list of urls to crawl.
 
-            A seed url is optionnal when restarting a crawl session, however, when
+            A seed url is optional when restarting a crawl session, however, when
             setting up a new crawling session (restart being False), a seed url is
             mandatory.
             """
