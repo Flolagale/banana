@@ -33,7 +33,7 @@ Banana uses [Python 2.7], [Bottle 0.10.9] as lightweight web framework for the w
 we plan to use [MongoDB] with the [PyMongo] driver for the index.
 
 ###Installation
-Soon...
+Coming soon...
 
 [Python]:http://www.python.org
 [GNU Affero General Public License]:http://www.gnu.org/licenses/agpl.html
