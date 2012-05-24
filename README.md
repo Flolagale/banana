@@ -1,7 +1,7 @@
 ##Banana search
 Banana search, or more concisely Banana is an intent of a pure [Python] search engine, released under the terms of the [GNU Affero General Public License].
 
-The aim is to provide a cross platform stand alone package that will allow anybody to run its own search engine right from its computer.
+The aim is to provide a cross platform standalone package that will allow anybody to run its own search engine right from its computer.
 The implementation tries to be as concise and simple as possible, following the [KISS principle].
 The Banana project provides a crawler (the Bananabot), an indexer, some scorers, and a searcher. It also comes with a command line interface and a web interface.
 
