@@ -11,7 +11,7 @@ The Banana project provides a crawler (the Bananabot), an indexer, some scorers,
 Of course they are, but the aim of Banana is to avoid any logging, tracking or bubbling that the commercial web search engines can use. The other reason is because we have a lot of fun developing Banana.
 
 ###In what Banana is different from the existing open source search engines?
-Banana is different because it comes as an installable stand-alone package. Some very good open source projects exist (for instance [Lucene]), allowing you to _develop_ your own search engine, based on their technology. The Banana project is meant to allow you to _easily install_ you engine, and it should work _out of the box_.
+Banana is different because it comes as an installable standalone package. Some very good open source projects exist (for instance [Lucene]), allowing you to _develop_ your own search engine, based on their technology. The Banana project is meant to allow you to _easily install_ you engine, and it should work _out of the box_.
 
 ###Can I try it?
 As soon as it will be sufficiently robust, a living instance of Banana search will be available.
