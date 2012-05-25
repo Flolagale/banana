@@ -30,7 +30,7 @@ for additional information.
 
 ###Dependencies
 Banana uses [Python 2.7], [Bottle 0.10.9] as lightweight web framework for the web interface and
-we plan to use [MongoDB] with the [PyMongo] driver for the index. The css and html pages are based on [HTML5 Boilerplate]
+we plan to use [MongoDB] with the [PyMongo] driver for the index. The css and html pages are based on the [HTML5 Boilerplate].
 
 ###Installation
 Coming soon...
