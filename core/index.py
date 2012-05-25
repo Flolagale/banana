@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with banana.  If not, see <http://www.gnu.org/licenses/>.
 #-*- coding: utf-8 -*-
+import blobprocessor
 import json
 import logging
 import re
@@ -175,7 +176,7 @@ class Index(object):
         tokenized_title = []
         if page.title:
             title_length = len(page.title.split())
-            tokenized_title = BlobProcessor.make_tokens_and_position(page.title)
+            tokenized_title = blobprocessor.make_tokens_and_position(page.title)
             for token_and_position in tokenized_title:
                 self._title_index.add_entry(page.url, token_and_position[0],
                         token_and_position[1])
@@ -185,13 +186,13 @@ class Index(object):
         # Index the full text of the page in the _full_text_index.
         # Try to get the text of the page, prepare it removing as much markup as
         # possible and tokenize it.
-        blob = BlobProcessor.remove_meaningless_chars(page.text)
+        blob = blobprocessor.remove_meaningless_chars(page.text)
 
         blob_length = 0
         tokens = []
         if blob:
             blob_length = len(blob.split())
-            tokenized_blob = BlobProcessor.make_tokens_and_position(blob)
+            tokenized_blob = blobprocessor.make_tokens_and_position(blob)
             for token_and_position in tokenized_blob:
                 self._full_text_index.add_entry(page.url, token_and_position[0],
                         token_and_position[1])
@@ -327,59 +328,4 @@ class InvertedIndex(object):
 
     def __repr__(self):
         return str(self.__dict__)
-
-
-class BlobProcessor(object):
-    """Utilies to process blobs of text in text indexing/searching context."""
-    STOP_WORDS = set([
-            'a', 'an', 'and', 'are', 'as', 'at', 'be', 'but', 'by',
-            'for', 'if', 'in', 'into', 'is', 'it',
-            'no', 'not', 'of', 'on', 'or', 's', 'such',
-            't', 'that', 'the', 'their', 'then', 'there', 'these',
-            'they', 'this', 'to', 'was', 'will', 'with'
-            ])
-    PUNCTUATION_PATTERN = re.compile(r'[-~`!@#$%^&*()+={}\[\]|\\:;"\',<.>/?]')
-    VALID_WORD_PATTERN = re.compile(r'^[a-zA-Z]+$')
-    MULTIPLE_SPACES_PATTERN = re.compile(r'\s{2,}')
-    MEANINGLESS_CHARS_PATTERN = re.compile(r'[\t\n\r\f\v]')
-
-    @staticmethod
-    def make_tokens_and_position(blob):
-        """
-        From a given Unicode blob of text, return the corresponding list of
-        tuples containing the preprocessed tokens and their position in the
-        original blob.
-
-        To do that, lower case the blob, strip punctuation, split by words, get
-        rid of stop words, validate that each obtained word matches the
-        Indexer.VALID_WORD_PATTERN regular expression.
-        """
-        tokens = []
-        for position, token in enumerate(blob.lower().split()):
-            # Remove punctuation.
-            token = BlobProcessor.PUNCTUATION_PATTERN.sub(' ', token)
-            if not token in BlobProcessor.STOP_WORDS:
-                tokens.append((token.strip(), position))
-        return tokens
-
-    @staticmethod
-    def make_tokens(blob):
-        """
-        From a given Unicode blob of text, return the corresponding list of tokens.
-
-        To do that, lower case the blob, strip punctuation, split by words, get
-        rid of stop words, validate that each obtained word matches the
-        Indexer.VALID_WORD_PATTERN regular expression.
-        """
-        return zip(*BlobProcessor.make_tokens_and_position(blob))[0]
-
-    @staticmethod
-    def remove_meaningless_chars(blob):
-        """
-        Remove the meaningless spaces (such as \\n, \\t) of
-        the given blob. Use as (remember strings are immutable):
-        blob = BlobProcessor.remove_markup(blob)
-        """
-        blob = BlobProcessor.MEANINGLESS_CHARS_PATTERN.sub(' ', blob)
-        return BlobProcessor.MULTIPLE_SPACES_PATTERN.sub(' ', blob)
 

@@ -15,7 +15,8 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with banana.  If not, see <http://www.gnu.org/licenses/>.
-from index import Index, BlobProcessor
+import blobprocessor
+from index import Index
 import logging
 import math
 import os
@@ -49,7 +50,7 @@ class Searcher(object):
         if not query:
             raise Exception('Invalid query \"%s\" in Searcher.query().' % query)
         #TODO add weights for the title and full text scores.
-        tokenized_query = BlobProcessor.make_tokens(query)
+        tokenized_query = blobprocessor.make_tokens(query)
 
         # Compute title relevance score.
         # Get urls with title matching query.
