@@ -132,7 +132,13 @@ class Crawler(object):
 
             # Read the page to a byte string, convert it to unicode and retrieve
             # the relevant information of the web page.
-            html = urllib2.urlopen(crawling).read().decode('utf-8', 'replace')
+            html = urllib2.urlopen(crawling).read()
+            try:
+                # Try decoding using utf-8
+                html = html.decode('utf-8')
+            except:
+                # Try with latin-1
+                html = html.decode('latin-1')
             page = HTMLPage(crawling, html)
 
             if page.title:

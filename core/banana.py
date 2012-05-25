@@ -52,6 +52,10 @@ class Banana(object):
             # Get the logger.
             self._logger = logging.getLogger(__name__)
 
+            # Member to cache the index. This member is at first None and will
+            # be allocated in the search method.
+            self._index = None
+
         def crawl(self, restart, seed=None):
             """
             Crawl the web starting from the seed url and using a potentially already
@@ -80,7 +84,15 @@ class Banana(object):
             urls.
             """
             self._logger.info('query: ' + query)
-            searcher = Searcher()
+
+            # If not already allocated, build an index here, restarting from a
+            # previously dumped one.
+            if self._index is None:
+                restart = True
+                self._index = Index(restart)
+
+            # Build a searcher using this index.
+            searcher = Searcher(self._index)
             return searcher.query(query)
 
     # The instance reference.
