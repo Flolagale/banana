@@ -163,6 +163,10 @@ class Crawler(object):
             self._logger.warning('URLError at url: %s\n%s' % (crawling, e))
             # Call recursively this method to crawl the next available url.
             return self.crawl()
+        except htmlutils.MalformedHTMLException as e:
+            self._logger.warning('MalformedHTMLException at url: %s\n%s' % (crawling, e))
+            # Call recursively this method to crawl the next available url.
+            return self.crawl()
         except KeyError:
             self._logger.info('Reached the end of the web.')
             self._logger.debug(self._tocrawl)

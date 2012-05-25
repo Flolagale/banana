@@ -118,7 +118,10 @@ class BananaHTMLParser(HTMLParser):
         # characters.
         html =  self.unescape(html)
         # Parse the html code.
-        self.feed(html)
+        try:
+            self.feed(html)
+        except HTMLParser.HTMLParseError as e:
+            raise MalformedHTMLException(e)
 
     def handle_starttag(self, tag, attrs):
         self._current_tag = tag

@@ -54,6 +54,10 @@ class Banana(object):
 
             # Member to cache the index. This member is at first None and will
             # be allocated in the search method.
+            # TODO Note this is alittle bit hacky, this is a temporary fix to
+            # improve speed by avoiding loading the index at each search query
+            # when using the web interface. This should no more be necessary
+            # when we will move to a real database.
             self._index = None
 
         def crawl(self, restart, seed=None):
