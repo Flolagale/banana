@@ -45,6 +45,9 @@ class HTMLPage(object):
         self.links = set([])
         parsed_url = urlparse.urlparse(url)
         for link in parser.links:
+            if link.startswith('#'):
+                # Do not save internal links.
+                continue
             if link.startswith('/'):
                 self.links.add('http://' + parsed_url[1] + link)
             elif not link.startswith('http'):

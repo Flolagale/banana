@@ -30,11 +30,11 @@ class Crawler(object):
                             '.js', '.zip', '.tar', '.gz', '.msi', '.txt',
                             '.css', '.tiff', '.mp2', '.mp3', '.mp4', '.wav',
                             '.avi', '.mov', '.mpeg', '.ram', '.wmv', '.swf',
-                            '.rar', '.aspx']
+                            '.rar', '.aspx', '.tgz', '.dmg', '.iso', '.torrent']
     BLACKLISTED_WORDS = ['shareit.com', 'sybase.com', 'gravatar', 'facebook',
                         'theme.wordpress.com', 'youtube.com', 'porn', 'sex',
                         'avventura', 'debtag', '.debian.org',
-                        'launchpad.net', 'logon']
+                        'launchpad.net', 'logon', 'mailto:']
     # Filename of the file to which the url to crawl will be dumped at the end
     # of the crawling session and read from at the next restart session.
     FILENAME = 'crawler.json'
@@ -132,7 +132,7 @@ class Crawler(object):
 
             # Read the page to a byte string, convert it to unicode and retrieve
             # the relevant information of the web page.
-            html = urllib2.urlopen(crawling).read().decode('utf-8')
+            html = urllib2.urlopen(crawling).read().decode('utf-8', 'replace')
             page = HTMLPage(crawling, html)
 
             if page.title:
