@@ -76,7 +76,7 @@ class Banana(object):
             # existing index in the current directory.
             index = Index(restart)
             try:
-                for i in xrange(1000): # ================================
+                for i in xrange(10000): # ================================
                     page = crawler.crawl()
                     index.add_entry(page)
             except StopIteration:

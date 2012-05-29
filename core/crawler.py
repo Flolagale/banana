@@ -15,7 +15,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with banana.  If not, see <http://www.gnu.org/licenses/>.
-from htmlutils import HTMLPage
+from htmlutils import HTMLPage, MalformedHTMLException
 import json
 import logging
 import unicodedata
@@ -163,7 +163,7 @@ class Crawler(object):
             self._logger.warning('URLError at url: %s\n%s' % (crawling, e))
             # Call recursively this method to crawl the next available url.
             return self.crawl()
-        except htmlutils.MalformedHTMLException as e:
+        except MalformedHTMLException as e:
             self._logger.warning('MalformedHTMLException at url: %s\n%s' % (crawling, e))
             # Call recursively this method to crawl the next available url.
             return self.crawl()
@@ -174,7 +174,7 @@ class Crawler(object):
         except Exception as e:
             self._logger.error(e.message)
             # Call recursively this method to crawl the next available url.
-            raise
+            # raise
             return self.crawl()
 
     def is_url_valid(self, url):
