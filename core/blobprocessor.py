@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 # Copyright 2012 Florent Galland
 #
 # This file is part of banana.
@@ -28,7 +29,9 @@ STOP_WORDS = set([
         'for', 'if', 'in', 'into', 'is', 'it',
         'no', 'not', 'of', 'on', 'or', 's', 'such',
         't', 'that', 'the', 'their', 'then', 'there', 'these',
-        'they', 'this', 'to', 'was', 'will', 'with'
+        'they', 'this', 'to', 'was', 'will', 'with',
+        'le', 'la', 'les', 'est', 'et', 'a', 'à', 'un', 'une',
+        'des', 'pour', 'par'
         ])
 PUNCTUATION_PATTERN = re.compile(r'[-~`!@#$%^&*()+={}\[\]|\\:;"\',<.>/?]')
 VALID_WORD_PATTERN = re.compile(r'^[a-zA-Z]+$')

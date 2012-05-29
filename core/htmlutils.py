@@ -15,7 +15,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with banana.  If not, see <http://www.gnu.org/licenses/>.
-from HTMLParser import HTMLParser
+from HTMLParser import HTMLParser, HTMLParseError
 import logging
 import urllib2
 import urlparse
@@ -118,7 +118,10 @@ class BananaHTMLParser(HTMLParser):
         # characters.
         html =  self.unescape(html)
         # Parse the html code.
-        self.feed(html)
+        try:
+            self.feed(html)
+        except HTMLParseError as e:
+            raise MalformedHTMLException(e)
 
     def handle_starttag(self, tag, attrs):
         self._current_tag = tag
@@ -174,15 +177,7 @@ class BananaHTMLParser(HTMLParser):
     def handle_data(self, data):
         # Handle the title.
         if self._current_tag == BananaHTMLParser.TITLE_TAG:
-            # There must be only one title in the page, so make sure this is the
-            # first time we find a title tag.
-            if self.title:
-                self._logger.error('Several \'title\' tags on the page:')
-                self._logger.error(self.title)
-                self._logger.error(data)
-                self._logger.error(self._tags_stack)
-                raise MalformedHTMLException('Several \'title\' tags on the page.')
-            self.title = data
+            self.title += data
 
         # Handle the text. If the current context is a text context, the current
         # data is some text, so store it.

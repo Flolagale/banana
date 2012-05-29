@@ -15,7 +15,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with banana.  If not, see <http://www.gnu.org/licenses/>.
-from htmlutils import HTMLPage
+from htmlutils import HTMLPage, MalformedHTMLException
 import json
 import logging
 import unicodedata
@@ -132,7 +132,13 @@ class Crawler(object):
 
             # Read the page to a byte string, convert it to unicode and retrieve
             # the relevant information of the web page.
-            html = urllib2.urlopen(crawling).read().decode('utf-8', 'replace')
+            html = urllib2.urlopen(crawling).read()
+            try:
+                # Try decoding using utf-8
+                html = html.decode('utf-8')
+            except:
+                # Try with latin-1
+                html = html.decode('latin-1')
             page = HTMLPage(crawling, html)
 
             if page.title:
@@ -157,6 +163,10 @@ class Crawler(object):
             self._logger.warning('URLError at url: %s\n%s' % (crawling, e))
             # Call recursively this method to crawl the next available url.
             return self.crawl()
+        except MalformedHTMLException as e:
+            self._logger.warning('MalformedHTMLException at url: %s\n%s' % (crawling, e))
+            # Call recursively this method to crawl the next available url.
+            return self.crawl()
         except KeyError:
             self._logger.info('Reached the end of the web.')
             self._logger.debug(self._tocrawl)
@@ -164,7 +174,7 @@ class Crawler(object):
         except Exception as e:
             self._logger.error(e.message)
             # Call recursively this method to crawl the next available url.
-            raise
+            # raise
             return self.crawl()
 
     def is_url_valid(self, url):

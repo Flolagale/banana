@@ -52,6 +52,14 @@ class Banana(object):
             # Get the logger.
             self._logger = logging.getLogger(__name__)
 
+            # Member to cache the index. This member is at first None and will
+            # be allocated in the search method.
+            # TODO Note this is alittle bit hacky, this is a temporary fix to
+            # improve speed by avoiding loading the index at each search query
+            # when using the web interface. This should no more be necessary
+            # when we will move to a real database.
+            self._index = None
+
         def crawl(self, restart, seed=None):
             """
             Crawl the web starting from the seed url and using a potentially already
@@ -68,7 +76,7 @@ class Banana(object):
             # existing index in the current directory.
             index = Index(restart)
             try:
-                for i in xrange(1000): # ================================
+                for i in xrange(10000): # ================================
                     page = crawler.crawl()
                     index.add_entry(page)
             except StopIteration:
@@ -80,7 +88,15 @@ class Banana(object):
             urls.
             """
             self._logger.info('query: ' + query)
-            searcher = Searcher()
+
+            # If not already allocated, build an index here, restarting from a
+            # previously dumped one.
+            if self._index is None:
+                restart = True
+                self._index = Index(restart)
+
+            # Build a searcher using this index.
+            searcher = Searcher(self._index)
             return searcher.query(query)
 
     # The instance reference.

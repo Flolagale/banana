@@ -28,21 +28,29 @@ class Searcher(object):
     Allows to search within an inverted index Index object from the index
     module.
     """
-    def __init__(self, index_filename='index.json'):
+    def __init__(self, index=None, index_filename='index.json'):
         """
-        Build a Searcher object, load the inverted index from
-        'index_filename' file.
+        Build a Searcher object.
+
+        Parameters:
+        index -- index.Index object. If given, attach this index to this
+        searcher.
+        index_filename -- If given, load the inverted index from the
+        corresponding file. Default name to 'index.json'.
+
         """
         # Get a logger assuming that the logging facility has been set up by the
         # banana module.
         self._logger = logging.getLogger(__name__)
 
         # Set up other members.
-        if not os.path.exists(index_filename):
-            self._logger.info('Unable to build the Searcher, '
-                    'no index file %s in the current directory.' % index_filename)
-            sys.exit(0)
+        if index is not None:
+            self._index = index
         else:
+            if not os.path.exists(index_filename):
+                self._logger.info('Unable to build the Searcher, '
+                        'no index file %s in the current directory.' % index_filename)
+                sys.exit(0)
             self._index = Index(index_filename)
 
     def query(self, query):
