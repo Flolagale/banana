@@ -59,6 +59,7 @@ class Searcher(object):
             raise Exception('Invalid query \"%s\" in Searcher.query().' % query)
         #TODO add weights for the title and full text scores.
         tokenized_query = blobprocessor.make_tokens(query)
+        self._logger.info('Tokenized query: %s' % ' '.join(tokenized_query))
 
         # Compute title relevance score.
         # Get urls with title matching query.

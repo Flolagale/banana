@@ -31,12 +31,13 @@ STOP_WORDS = set([
         't', 'that', 'the', 'their', 'then', 'there', 'these',
         'they', 'this', 'to', 'was', 'will', 'with',
         'le', 'la', 'les', 'est', 'et', 'a', 'à', 'un', 'une',
-        'des', 'pour', 'par'
+        'des', 'pour', 'par', 'l'
         ])
 PUNCTUATION_PATTERN = re.compile(r'[-~`!@#$%^&*()+={}\[\]|\\:;"\',<.>/?]')
 VALID_WORD_PATTERN = re.compile(r'^[a-zA-Z]+$')
 MULTIPLE_SPACES_PATTERN = re.compile(r'\s{2,}')
 MEANINGLESS_CHARS_PATTERN = re.compile(r'[\t\n\r\f\v]')
+
 
 def make_tokens_and_position(blob):
     """
@@ -49,11 +50,13 @@ def make_tokens_and_position(blob):
     Indexer.VALID_WORD_PATTERN regular expression.
     """
     tokens = []
-    for position, token in enumerate(blob.lower().split()):
-        # Remove punctuation.
-        token = PUNCTUATION_PATTERN.sub(' ', token)
-        if not token in STOP_WORDS:
-            tokens.append((token.strip(), position))
+    for position, word in enumerate(blob.lower().split()):
+        # Remove punctuation. Handle the typical case: "l'avoir" as "l avoir",
+        # which are 2 tokens!
+        punctuation_free_word = PUNCTUATION_PATTERN.sub(' ', word)
+        for token in punctuation_free_word.split():
+            if not token.strip() in STOP_WORDS:
+                tokens.append((token.strip(), position))
     return tokens
 
 

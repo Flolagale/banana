@@ -174,7 +174,7 @@ class Crawler(object):
         except Exception as e:
             self._logger.error(e.message)
             # Call recursively this method to crawl the next available url.
-            # raise
+            raise
             return self.crawl()
 
     def is_url_valid(self, url):
