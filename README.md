@@ -26,9 +26,9 @@ As soon as it will be sufficiently robust, a living instance of Banana search wi
 ###How can it work from my computer, I don't have a cluster with terabytes of storage?
 The commercial search engines have to crawl and index _the whole web_ since they aim to provide relevant search
 results for every user. However, for the major part of your search engine use, have you ever wondered how many
-different terms you have used? How many different topics have you searched?
+different terms you have used? How many different topics you have searched for?
 Here is the trick, only a _small subset_ of the web have to be indexed to provide interesting results for
-the majority of your web search request, small subset that will fit on your standard computer.
+the majority of your web search requests, subset that we estimate small enough to fit on your standard computer.
 Hence we believe that Banana can be adapted to your web search profile. We also believe that you still have
 sometimes to search on a commercial search engine.
 
