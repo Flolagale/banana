@@ -1,20 +1,20 @@
 #!/usr/bin/python
 # Copyright 2012 Florent Galland
 #
-# This file is part of banana.
+# This file is part of Banana Search.
 #
-# banana is free software: you can redistribute it and/or modify
+# Banana Search is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
-# banana is distributed in the hope that it will be useful,
+# Banana Search is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with banana.  If not, see <http://www.gnu.org/licenses/>.
+# along with Banana Search. If not, see <http://www.gnu.org/licenses/>.
 from HTMLParser import HTMLParser, HTMLParseError
 import logging
 import urllib2
@@ -52,6 +52,9 @@ class HTMLPage(object):
                 self.links.add('http://' + parsed_url[1] + link)
             elif not link.startswith('http'):
                 self.links.add('http://' + parsed_url[1] + '/' + link)
+            else:
+                # Save the raw link.
+                self.links.add(link)
 
         # The title of the page.
         self.title = parser.title
@@ -92,7 +95,7 @@ class BananaHTMLParser(HTMLParser):
         self._tags_stack = []
         self._current_tag = None
         # Flag use to detect titles that contain only a link, like the following
-        # pattern: <h1><a href='/about'>about</a></h1>
+        # pattern: <h1><a href="/about">about</a></h1>
         # So _is_first_chunk_of_text_data is set to False by the first handled data
         # of the current tag.
         self._is_first_chunk_of_text_data = True
@@ -201,9 +204,11 @@ def main():
     """Method used for testing."""
     # url = 'http://www.liberation.fr'
     url = 'http://www.python.org'
-    html =('<html><head><title>Test</title></head>' +
-        '<body><h1>Parse me!</h1><img src="toto" />' +
+    html =('<html><head><title>Test</title></head>\n'
+        '<body><h1>Parse me!</h1><img src="toto" />\n'
+        '<a href="http://myurl.com">Hello Kitty!</a>\n'
         '<form id="titi"><input type="text" /></body></html>')
+    print(html)
     # html = urllib2.urlopen(url).read().decode('utf-8')
     page = HTMLPage(url, html)
 

@@ -1,20 +1,20 @@
 #!/usr/bin/python
 # Copyright 2012 Florent Galland
 #
-# This file is part of banana.
+# This file is part of Banana Search.
 #
-# banana is free software: you can redistribute it and/or modify
+# Banana Search is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
-# banana is distributed in the hope that it will be useful,
+# Banana Search is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with banana.  If not, see <http://www.gnu.org/licenses/>.
+# along with Banana Search. If not, see <http://www.gnu.org/licenses/>.
 from htmlutils import HTMLPage, MalformedHTMLException
 import json
 import logging
@@ -174,7 +174,7 @@ class Crawler(object):
         except Exception as e:
             self._logger.error(e.message)
             # Call recursively this method to crawl the next available url.
-            raise
+            # raise
             return self.crawl()
 
     def is_url_valid(self, url):

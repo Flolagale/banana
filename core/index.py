@@ -1,21 +1,21 @@
 #!/usr/bin/python
+#-*- coding: utf-8 -*-
 # Copyright 2012 Florent Galland
 #
-# This file is part of banana.
+# This file is part of Banana Search.
 #
-# banana is free software: you can redistribute it and/or modify
+# Banana Search is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
-# banana is distributed in the hope that it will be useful,
+# Banana Search is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with banana.  If not, see <http://www.gnu.org/licenses/>.
-#-*- coding: utf-8 -*-
+# along with Banana Search. If not, see <http://www.gnu.org/licenses/>.
 import blobprocessor
 import json
 import logging
@@ -42,8 +42,23 @@ class Index(object):
         # banana module.
         self._logger = logging.getLogger(__name__)
 
-        # Indexed urls and their associated information such as id, length of
-        # title and full text and the full text of the page itself.
+        # Indexed urls and their associated information as follows:
+        # self._urls = {
+        #         url: {
+        #             'id':   -- int, the url id.
+        #             'date': -- the last time it was indexed in seconds since epoch.
+        #             'title': -- string, title of the page.
+        #             'title_length': -- int, the title length.
+        #             'full_text': -- string, the page full raw text.
+        #             'full_text_length': -- int, the raw text length.
+        #             'incoming_links': -- int, the total number of links pointing
+        #                                 toward that page.
+        #             'incoming_links_text': -- string, the concatenation of the
+        #                                 text of all the incoming links.
+        #             }
+        #         }
+        # TODO Note that this is not a separate object for performance issues. This
+        # might change when a database will be used.
         self._urls = {}
 
         self._title_index = InvertedIndex()
@@ -184,10 +199,9 @@ class Index(object):
             self._logger.warning('Unable to get title from url \'%s\'' % page.url)
 
         # Index the full text of the page in the _full_text_index.
-        # Try to get the text of the page, prepare it removing as much markup as
-        # possible and tokenize it.
+        # Get the text of the page, prepare it by removing the double spaces
+        # and the carriage returns and tokenize it.
         blob = blobprocessor.remove_meaningless_chars(page.text)
-
         blob_length = 0
         tokens = []
         if blob:
@@ -198,6 +212,8 @@ class Index(object):
                         token_and_position[1])
         else:
             self._logger.warning('Unable to get text from url \'%s\'' % page.url)
+
+        # TODO Index the page outgoing links.
 
         # Save page info.
         url_info = self._urls.setdefault(page.url, {})
