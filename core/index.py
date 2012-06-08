@@ -246,8 +246,34 @@ class Index(object):
             self.dump(Index.FILENAME)
 
 
-class InvertedIndex(object):
+class IInvertedIndex(object):
     """
+    Interface describing the inverted index API.
+
+    An inverted index is a data set which links a term/word/token to all the
+    urls which contains that term/word/token and in which position in the text.
+    """
+    def add_entry(self, url, token, position):
+        """
+        Add an entry in the InvertedIndex.
+
+        position is an integer, position of the token in the blob of text
+        corresponding to the url.
+        """
+        raise NotImplementedError()
+
+    def get_matching_urls(self, token):
+        """
+        Return a list of the urls matching the given token.
+        """
+        raise NotImplementedError()
+
+
+class JSONInvertedIndex(IInvertedIndex):
+    """
+    Inverted index implementation that uses simple json stored in flat files as
+    a database.
+
     An inverted index is a data set which links a term/word/token to all the
     urls which contains that term/word/token and in which position in the text.
 
@@ -307,6 +333,9 @@ class InvertedIndex(object):
         return urls_and_occurrences
 
     def get_matching_urls(self, token):
+        """
+        Return a list of the urls matching the given token.
+        """
         urls = set([])
         if token in self._index:
             for url in self._index[token].keys():
