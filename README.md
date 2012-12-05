@@ -43,11 +43,14 @@ Then install the Bottle web framework (you mitght need to install pip first. Thi
 ```bash
 pip install bottle
 ```
-Finally, run Banana.
+Finally, run Banana. This will show you some help.
 ```bash
 cd banana
 python bin/banana
 ```
+You can first index some data with the banana crawl command.
+Then start the Banana server with the banana webstart command.
+While it is running, you can access it by pointing your web browser to localhost:8000.
 
 [Python]:http://www.python.org
 [GNU Affero General Public License]:http://www.gnu.org/licenses/agpl.html
