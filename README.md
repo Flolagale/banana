@@ -33,7 +33,21 @@ Banana uses [Python 2.7], [Bottle 0.10.9] as lightweight web framework for the w
 we plan to use [MongoDB] with the [PyMongo] driver for the index. The css and html pages are based on the [HTML5 Boilerplate].
 
 ###Installation
-Coming soon...
+This should work on unix and windows system, as soon as Python is installed. It has however been tested only on Linux.
+
+Clone this repo, for instance in a directory called banana.
+```bash
+git clone https://github.com/Flolagale/banana.git banana
+```
+Then install the Bottle web framework (you mitght need to install pip first. This might be available in you package manager.)
+```bash
+pip install bottle
+```
+Finally, run Banana.
+```bash
+cd banana
+python bin/banana
+```
 
 [Python]:http://www.python.org
 [GNU Affero General Public License]:http://www.gnu.org/licenses/agpl.html
